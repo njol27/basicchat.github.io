@@ -168,7 +168,10 @@
 
 
 const db = getDatabase(app);
-const timestamp = Date.now();
+const timestamp = new Date().toDateString();
+const d = new Date();
+var tim = d.getHours();
+var tim2 = d.getMinutes();
 var namebox = document.getElementById("name");
 var msgbox = document.getElementById("mesag");
 var insbtn = document.getElementById("insrt");
@@ -182,7 +185,8 @@ set(newPostRef, {
     // ...
 			 Name: namebox.value,
 		 message: msgbox.value,
-		 time: timestamp,
+		 date: timestamp,
+		 time: tim + ":" + tim2,
 });
 
 setTimeout(() => {
@@ -199,7 +203,7 @@ onValue(dbRef, (snapshot) => {
   snapshot.forEach((childSnapshot) => {
     const childData = childSnapshot.val();
     // ...
-	const msg = "<li class='list-group-item'>" + childData.Name + " : " + childData.message + "</li>";
+		const msg = "<li class='list-group-item'> <div class='text-start'>" + childData.Name + " : " + childData.message + "</div><div class='text-end'>" + childData.date + " "+ childData.time + "</div></li>";
 	const chat1 = document.getElementById("cht");
 	chat1.insertAdjacentHTML("afterend", msg);	
   });
